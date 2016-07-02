@@ -15,26 +15,21 @@ import rx.Subscriber
  */
 object PermissionHelper {
     fun check(permission: String): Observable<Boolean> {
-        var observer: Subscriber<in Boolean>? = null
-        var ret = Observable.create<Boolean> {
-            observer = it
+        return Observable.create<Boolean> {
+            Dexter.checkPermission(object: PermissionListener {
+                override fun onPermissionGranted(response: PermissionGrantedResponse?) {
+                    it.onNext(true)
+                }
+
+                override fun onPermissionDenied(response: PermissionDeniedResponse?) {
+                    it.onNext(false)
+                }
+
+                override fun onPermissionRationaleShouldBeShown(permission: PermissionRequest?, token: PermissionToken?) {
+                    // Do Nothing for now.
+                }
+            }, permission)
         }
-
-        Dexter.checkPermission(object: PermissionListener {
-            override fun onPermissionGranted(response: PermissionGrantedResponse?) {
-                observer?.onNext(true)
-            }
-
-            override fun onPermissionDenied(response: PermissionDeniedResponse?) {
-                observer?.onNext(false)
-            }
-
-            override fun onPermissionRationaleShouldBeShown(permission: PermissionRequest?, token: PermissionToken?) {
-                // Do Nothing for now.
-            }
-        }, permission)
-
-        return ret
     }
 
     fun checkInternet() = check(Manifest.permission.INTERNET)
