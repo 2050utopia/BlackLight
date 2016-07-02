@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/colorPrimary"
+    tools:context=".ui.main.WelcomeActivity">
+
+    <info.papdt.blacklight.support.widget.NoSwipeViewPager
+        android:id="@+id/welcome_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/welcome_buttons">
+        <RelativeLayout
+            android:id="@+id/welcome_page_1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+           <TextView
+               android:id="@+id/welcome_title"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_centerVertical="true"
+               android:layout_centerHorizontal="true"
+               android:text="@string/app_name"
+               android:textColor="@color/colorText"
+               android:textSize="@dimen/welcome_big_text_size"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/welcome_title"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:text="@string/welcome_setup"
+                android:textColor="@color/colorTextSecondary"
+                android:textSize="@dimen/text_size"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/welcome_page_2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <WebView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/welcome_page_3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></RelativeLayout>
+    </info.papdt.blacklight.support.widget.NoSwipeViewPager>
+
+    <RelativeLayout
+        android:id="@+id/welcome_buttons"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginStart="@dimen/activity_horizontal_margin">
+
+        <Button
+            android:id="@+id/welcome_button_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:drawableEnd="@drawable/ic_keyboard_arrow_right_white_24dp"
+            android:background="?attr/selectableItemBackground"
+            android:text="@string/next"
+            android:textColor="@color/colorText"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>
