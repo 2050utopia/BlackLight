@@ -3,6 +3,9 @@ package info.papdt.blacklight.ui.main
 import android.os.Bundle
 import nucleus.presenter.RxPresenter
 
+import rx.android.schedulers.AndroidSchedulers
+import rx.schedulers.Schedulers
+
 import info.papdt.blacklight.support.helper.*
 
 /**
@@ -32,7 +35,36 @@ class WelcomePresenter : RxPresenter<WelcomeActivity>() {
                 .subscribe { RxBus.post(NextPageEvent()) }
                 .autoUnsubscribe(this)
         RxBus.listen<PageChangeEvent>()
-                .subscribe { if (it.page == 1) RxBus.post(DisableNextButtonEvent()) }
+                .subscribe {
+                    if (it.page == 1) {
+                        RxBus.post(DisableNextButtonEvent())
+                        RxBus.post(LoadUrlEvent(AuthorizationHelper.authorizationUrl))
+                    } else {
+                        RxBus.post(EnableNextButtonEvent())
+                    }
+
+                    if (it.page == 2) {
+                        RxBus.post(WelcomeUserEvent(AccountManager[AccountManager.current].username))
+                    }
+                }
+                .autoUnsubscribe(this)
+        RxBus.listen<PageOverflowEvent>()
+                .subscribe { RxBus.post(FinishEvent()) }
+                .autoUnsubscribe(this)
+        RxBus.listen<RedirectEvent>()
+                .flatMap {
+                    AuthorizationHelper.handleRedirectUrl(it.url)
+                            .subscribeOn(Schedulers.io())
+                }
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { succeed ->
+                    if (succeed) {
+                        RxBus.post(NextPageEvent())
+                    } else {
+                        RxBus.post(ShowLoginFailedMessageEvent())
+                        RxBus.post(LoadUrlEvent(AuthorizationHelper.authorizationUrl))
+                    }
+                }
                 .autoUnsubscribe(this)
     }
 }

@@ -40,6 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <WebView
+                android:id="@+id/welcome_web_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
         </RelativeLayout>
@@ -47,7 +48,19 @@
         <RelativeLayout
             android:id="@+id/welcome_page_3"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"></RelativeLayout>
+            android:layout_height="match_parent"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin">
+            <TextView
+                android:id="@+id/welcome_user"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:gravity="center_horizontal"
+                android:textColor="@color/colorText"
+                android:textSize="@dimen/welcome_big_text_size"/>
+        </RelativeLayout>
     </info.papdt.blacklight.support.widget.NoSwipeViewPager>
 
     <RelativeLayout

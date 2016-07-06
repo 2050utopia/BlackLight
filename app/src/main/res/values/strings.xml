@@ -3,4 +3,6 @@
 
     <string name="welcome_setup">Now we\'ll get everything set up for you.</string>
     <string name="next">Next</string>
+    <string name="login_failed">Failed to log into your account. Please try again.</string>
+    <string name="welcome_user">You are okay to go, %s!</string>
 </resources>
